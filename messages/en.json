@@ -16,7 +16,8 @@
     "needHelp": "Need help?"
   },
   "nav": {
-    "home": "Home"
+    "home": "Home",
+    "support": "Support"
   },
   "auth": {
     "signIn": "Sign in",

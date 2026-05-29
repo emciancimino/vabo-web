@@ -16,7 +16,8 @@
     "needHelp": "Benötigen Sie Hilfe?"
   },
   "nav": {
-    "home": "Startseite"
+    "home": "Startseite",
+    "support": "Support"
   },
   "auth": {
     "signIn": "Anmelden",
