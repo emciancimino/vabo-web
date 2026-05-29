@@ -47,6 +47,8 @@
   },
   "errors": {
     "notFound": "Seite nicht gefunden",
+    "notFoundDescription": "Leider konnte die gesuchte Seite nicht gefunden werden. Möglicherweise haben Sie die URL falsch eingegeben.",
+    "goHome": "Zur Startseite",
     "serverError": "Serverfehler",
     "unauthorized": "Nicht autorisiert"
   }

@@ -47,6 +47,8 @@
   },
   "errors": {
     "notFound": "Pagina non trovata",
+    "notFoundDescription": "Spiacenti, non riusciamo a trovare la pagina che stai cercando. Forse hai digitato male l'URL?",
+    "goHome": "Torna alla home",
     "serverError": "Errore del server",
     "unauthorized": "Non autorizzato"
   }

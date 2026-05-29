@@ -47,6 +47,8 @@
   },
   "errors": {
     "notFound": "Page introuvable",
+    "notFoundDescription": "Désolé, nous n'avons pas trouvé la page que vous recherchez. Peut-être avez-vous mal saisi l'URL ?",
+    "goHome": "Retour à l'accueil",
     "serverError": "Erreur serveur",
     "unauthorized": "Non autorisé"
   }
