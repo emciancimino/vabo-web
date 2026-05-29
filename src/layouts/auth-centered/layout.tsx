@@ -7,6 +7,7 @@ import type { HeaderSectionProps } from '../core/header-section';
 import type { LayoutSectionProps } from '../core/layout-section';
 
 import { merge } from 'es-toolkit';
+import { useTranslations } from 'next-intl';
 
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
@@ -47,6 +48,8 @@ export function AuthCenteredLayout({
   slotProps,
   layoutQuery = 'md',
 }: AuthCenteredLayoutProps) {
+  const t = useTranslations('common');
+
   const renderHeader = () => {
     const headerSlotProps: HeaderSectionProps['slotProps'] = { container: { maxWidth: false } };
 
@@ -71,7 +74,7 @@ export function AuthCenteredLayout({
             color="inherit"
             sx={{ typography: 'subtitle2' }}
           >
-            Need help?
+            {t('needHelp')}
           </Link>
 
           {/** @slot Language popover */}

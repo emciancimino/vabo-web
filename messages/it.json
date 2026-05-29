@@ -12,7 +12,8 @@
     "submit": "Invia",
     "search": "Cerca",
     "error": "Qualcosa è andato storto",
-    "retry": "Riprova"
+    "retry": "Riprova",
+    "needHelp": "Hai bisogno di aiuto?"
   },
   "nav": {
     "home": "Home"

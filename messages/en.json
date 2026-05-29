@@ -12,7 +12,8 @@
     "submit": "Submit",
     "search": "Search",
     "error": "Something went wrong",
-    "retry": "Try again"
+    "retry": "Try again",
+    "needHelp": "Need help?"
   },
   "nav": {
     "home": "Home"

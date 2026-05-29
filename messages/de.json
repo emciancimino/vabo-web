@@ -12,7 +12,8 @@
     "submit": "Absenden",
     "search": "Suchen",
     "error": "Etwas ist schiefgelaufen",
-    "retry": "Erneut versuchen"
+    "retry": "Erneut versuchen",
+    "needHelp": "Benötigen Sie Hilfe?"
   },
   "nav": {
     "home": "Startseite"
