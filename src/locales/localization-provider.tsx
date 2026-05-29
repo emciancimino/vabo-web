@@ -3,6 +3,8 @@
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider as Provider } from '@mui/x-date-pickers/LocalizationProvider';
 
+import { useLang } from 'src/providers/lang-provider';
+
 // ----------------------------------------------------------------------
 
 type Props = {
@@ -10,5 +12,11 @@ type Props = {
 };
 
 export function LocalizationProvider({ children }: Props) {
-  return <Provider dateAdapter={AdapterDayjs}>{children}</Provider>;
+  const { locale } = useLang();
+
+  return (
+    <Provider dateAdapter={AdapterDayjs} adapterLocale={locale}>
+      {children}
+    </Provider>
+  );
 }

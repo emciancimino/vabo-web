@@ -1,6 +1,6 @@
 import type { IconButtonProps } from '@mui/material/IconButton';
 
-import { useState, useCallback } from 'react';
+import { useCallback } from 'react';
 import { usePopover } from 'minimal-shared/hooks';
 
 import Popover from '@mui/material/Popover';
@@ -8,6 +8,7 @@ import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 
+import { useLang } from 'src/providers/lang-provider';
 import { FlagIcon } from 'src/components/flag-icon';
 
 // ----------------------------------------------------------------------
@@ -22,22 +23,22 @@ export type LanguagePopoverProps = IconButtonProps & {
 
 export function LanguagePopover({ data = [], sx, ...other }: LanguagePopoverProps) {
   const { open, onClose, onOpen, anchorEl } = usePopover();
+  const { locale, setLocale } = useLang();
 
-  const [locale, setLocale] = useState<string>(data[0].value);
-
-  const currentLang = data.find((lang) => lang.value === locale);
+  const currentLang = data.find((lang) => lang.value === locale) ?? data[0];
 
   const handleChangeLang = useCallback(
     (newLang: string) => {
       setLocale(newLang);
       onClose();
     },
-    [onClose]
+    [setLocale, onClose]
   );
 
   const renderButton = () => (
     <IconButton
       onClick={onOpen}
+      aria-label={`Language: ${currentLang?.label}`}
       sx={[
         {
           p: 0,
@@ -65,7 +66,7 @@ export function LanguagePopover({ data = [], sx, ...other }: LanguagePopoverProp
         {data?.map((option) => (
           <MenuItem
             key={option.value}
-            selected={option.value === currentLang?.value}
+            selected={option.value === locale}
             onClick={() => handleChangeLang(option.value)}
             sx={{ gap: 2 }}
           >
