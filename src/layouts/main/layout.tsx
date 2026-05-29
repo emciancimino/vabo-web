@@ -8,10 +8,15 @@ import type { HeaderSectionProps } from '../core/header-section';
 import type { LayoutSectionProps } from '../core/layout-section';
 
 import { useBoolean } from 'minimal-shared/hooks';
+import { useTranslations } from 'next-intl';
 
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
+import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
 
+import { paths } from 'src/routes/paths';
+import { RouterLink } from 'src/routes/components';
 import { usePathname } from 'src/routes/hooks';
 
 import { Logo } from 'src/components/logo';
@@ -53,11 +58,43 @@ export function MainLayout({
   slotProps,
   layoutQuery = 'md',
 }: MainLayoutProps) {
+  const t = useTranslations('auth');
   const pathname = usePathname();
 
   const { value: open, onFalse: onClose, onTrue: onOpen } = useBoolean();
 
   const homePage = pathname === '/';
+
+  const renderAuthButtons = (orientation: 'horizontal' | 'vertical' = 'horizontal') => (
+    <Box
+      sx={
+        orientation === 'vertical'
+          ? { display: 'flex', flexDirection: 'column', gap: 1.5, p: 2.5, pb: 3 }
+          : { gap: 1, display: 'flex', alignItems: 'center' }
+      }
+    >
+      <Button
+        component={RouterLink}
+        href={paths.auth.signIn}
+        variant="outlined"
+        size={orientation === 'vertical' ? 'large' : 'small'}
+        fullWidth={orientation === 'vertical'}
+        color="inherit"
+      >
+        {t('signIn')}
+      </Button>
+      <Button
+        component={RouterLink}
+        href={paths.auth.signUp}
+        variant="contained"
+        size={orientation === 'vertical' ? 'large' : 'small'}
+        fullWidth={orientation === 'vertical'}
+        color="inherit"
+      >
+        {t('getStarted')}
+      </Button>
+    </Box>
+  );
 
   const renderHeader = () => {
     const headerSlots: HeaderSectionProps['slots'] = {
@@ -77,7 +114,19 @@ export function MainLayout({
               [theme.breakpoints.up(layoutQuery)]: { display: 'none' },
             })}
           />
-          <NavMobile data={navData} open={open} onClose={onClose} />
+          <NavMobile
+            data={navData}
+            open={open}
+            onClose={onClose}
+            slots={{
+              bottomArea: (
+                <>
+                  <Divider />
+                  {renderAuthButtons('vertical')}
+                </>
+              ),
+            }}
+          />
 
           {/** @slot Logo */}
           <Logo sx={{ display: { xs: 'none', [layoutQuery]: 'inline-flex' } }} />
@@ -103,7 +152,10 @@ export function MainLayout({
           {/** @slot Settings button */}
           <SettingsButton />
 
-          {/** @slot Purchase button */}
+          {/** @slot Auth buttons — desktop only */}
+          <Box sx={(theme) => ({ display: 'none', [theme.breakpoints.up(layoutQuery)]: { display: 'flex' } })}>
+            {renderAuthButtons('horizontal')}
+          </Box>
         </Box>
       ),
     };
