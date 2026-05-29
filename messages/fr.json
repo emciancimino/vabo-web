@@ -21,10 +21,18 @@
     "signIn": "Se connecter",
     "signUp": "S'inscrire",
     "signOut": "Se déconnecter",
+    "getStarted": "Commencer",
+    "createAccount": "Créer un compte",
     "forgotPassword": "Mot de passe oublié ?",
     "resetPassword": "Réinitialiser le mot de passe",
-    "email": "E-mail",
-    "password": "Mot de passe"
+    "email": "Adresse e-mail",
+    "password": "Mot de passe",
+    "passwordPlaceholder": "6+ caractères",
+    "fullName": "Nom complet",
+    "confirmPassword": "Confirmer le mot de passe",
+    "noAccount": "Pas encore de compte ?",
+    "hasAccount": "Déjà un compte ?",
+    "tagline": "Votre espace créatif,\ntout en un seul endroit."
   },
   "errors": {
     "notFound": "Page introuvable",

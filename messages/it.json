@@ -21,10 +21,18 @@
     "signIn": "Accedi",
     "signUp": "Registrati",
     "signOut": "Esci",
+    "getStarted": "Inizia ora",
+    "createAccount": "Crea account",
     "forgotPassword": "Password dimenticata?",
     "resetPassword": "Reimposta password",
-    "email": "Email",
-    "password": "Password"
+    "email": "Indirizzo email",
+    "password": "Password",
+    "passwordPlaceholder": "6+ caratteri",
+    "fullName": "Nome completo",
+    "confirmPassword": "Conferma password",
+    "noAccount": "Non hai un account?",
+    "hasAccount": "Hai già un account?",
+    "tagline": "Il tuo spazio creativo,\nall in one place."
   },
   "errors": {
     "notFound": "Pagina non trovata",
