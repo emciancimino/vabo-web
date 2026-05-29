@@ -10,7 +10,7 @@ export type ConfigValue = {
 };
 
 export const CONFIG: ConfigValue = {
-  appName: 'Vabo',
+  appName: 'vabo',
   appVersion: packageJson.version,
   assetsDir: process.env.NEXT_PUBLIC_ASSETS_DIR ?? '',
   googleMapApiKey: process.env.NEXT_PUBLIC_MAP_API ?? '',
