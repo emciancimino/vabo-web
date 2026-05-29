@@ -115,6 +115,7 @@ Sempre **vabo** con v minuscola — mai "Vabo", "VABO" o altre varianti.
 - I date picker si adattano automaticamente tramite `LocalizationProvider` (AdapterDayjs riceve il locale)
 
 ### Zone UI template
+- **Prima di creare qualsiasi componente, hook, utility o funzionalità**: verificare se esiste già nel template (`/Users/eugenio.ciancimino/Workspace/EMC/templates/Zone_TypeScript_v4.5.1/next-ts/src/`)
 - Importare solo: `theme/`, `components/`, `layouts/` — mai `sections/`, `_mock/`, `types/`, demo pages
 - Il template è un punto di partenza, non una dipendenza da mantenere aggiornata
 
