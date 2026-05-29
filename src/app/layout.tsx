@@ -11,6 +11,7 @@ import { themeOverrides } from 'src/theme/theme-overrides';
 import { themeConfig, ThemeProvider, primary as primaryColor } from 'src/theme';
 
 import { ProgressBar } from 'src/components/progress-bar';
+import { ScrollToTop } from 'src/components/scroll-to-top';
 import { MotionLazy } from 'src/components/animate/motion-lazy';
 import { SettingsDrawer, defaultSettings, SettingsProvider } from 'src/components/settings';
 
@@ -56,6 +57,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
                 defaultMode={themeConfig.defaultMode}
               >
                 <MotionLazy>
+                  <ScrollToTop />
                   <ProgressBar />
                   <SettingsDrawer defaultSettings={defaultSettings} />
                   {children}
