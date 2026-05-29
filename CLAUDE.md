@@ -5,6 +5,7 @@
 - Il portale deve essere **responsive mobile-first**
 - Accessibilità minima: **WCAG 2.1 AA** — target **AAA** dove possibile
   - Contrasto colori, label su form, focus visibile, aria-label su elementi interattivi, semantica HTML corretta
+- Il portale è **multilanguage** — ogni stringa visibile all'utente deve essere predisposta per la traduzione
 
 ## Stack
 - **Framework**: Next.js 16 (App Router) — React 19
@@ -44,7 +45,7 @@ src/
     components/         # RouterLink
   theme/                # Sistema tema MUI completo
   types/                # TypeScript types condivisi (usati in >1 file)
-  providers/            # React Context providers
+  providers/            # React Context providers (LangProvider, ecc.)
   utils/                # format-number, format-time
   assets/
     data/               # countries.ts e altri dati statici
@@ -98,6 +99,22 @@ Sempre **vabo** con v minuscola — mai "Vabo", "VABO" o altre varianti.
 - Elementi interattivi non-button: `role` e `tabIndex` espliciti.
 - Focus visibile sempre presente (non rimuovere `outline` senza alternativa).
 - Testare con tastiera prima di considerare un componente completo.
+
+### Multilanguage
+- Lingue supportate: **EN** (default), **IT**, **FR**, **DE** — config in `src/layouts/langs-config.ts`
+- La lingua è persistita via cookie `vabo-lang` — leggibile server-side, nessun flash di hydration
+- Ogni componente accede alla lingua corrente via `useLang()` da `src/providers/lang-provider`
+- Nessuna stringa UI hardcoded nei componenti — preparare sempre i18n key anche se la libreria di traduzione (next-intl) non è ancora integrata
+- Il layer `LocalizationProvider` passa il locale ad AdapterDayjs — i date picker si adattano automaticamente
+
+### Zone UI template
+- Importare solo: `theme/`, `components/`, `layouts/` — mai `sections/`, `_mock/`, `types/`, demo pages
+- Il template è un punto di partenza, non una dipendenza da mantenere aggiornata
+
+### Logo
+- File: `/public/brand/icon-192x192.png` — solo questa versione, nessun SVG, nessun wordmark
+- Nessuna variante dark/light — il logo è lo stesso in entrambi i temi
+- Componente: `src/components/logo/logo.tsx`
 
 ### SSL dev
 Il server usa certificati mkcert in `certificates/` (non in git).
