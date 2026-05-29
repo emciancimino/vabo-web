@@ -1,0 +1,34 @@
+{
+  "common": {
+    "loading": "Chargement...",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "confirm": "Confirmer",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "close": "Fermer",
+    "back": "Retour",
+    "next": "Suivant",
+    "submit": "Envoyer",
+    "search": "Rechercher",
+    "error": "Une erreur est survenue",
+    "retry": "Réessayer"
+  },
+  "nav": {
+    "home": "Accueil"
+  },
+  "auth": {
+    "signIn": "Se connecter",
+    "signUp": "S'inscrire",
+    "signOut": "Se déconnecter",
+    "forgotPassword": "Mot de passe oublié ?",
+    "resetPassword": "Réinitialiser le mot de passe",
+    "email": "E-mail",
+    "password": "Mot de passe"
+  },
+  "errors": {
+    "notFound": "Page introuvable",
+    "serverError": "Erreur serveur",
+    "unauthorized": "Non autorisé"
+  }
+}

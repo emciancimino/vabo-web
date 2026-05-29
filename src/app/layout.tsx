@@ -2,12 +2,12 @@ import 'src/global.css';
 
 import type { Metadata, Viewport } from 'next';
 
-import { cookies } from 'next/headers';
+import { NextIntlClientProvider } from 'next-intl';
+import { getLocale, getMessages } from 'next-intl/server';
 import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 
 import { LocalizationProvider } from 'src/locales';
-import { LangProvider } from 'src/providers/lang-provider';
 import { themeOverrides } from 'src/theme/theme-overrides';
 import { themeConfig, ThemeProvider, primary as primaryColor } from 'src/theme';
 
@@ -38,11 +38,11 @@ type RootLayoutProps = {
 };
 
 export default async function RootLayout({ children }: RootLayoutProps) {
-  const cookieStore = await cookies();
-  const initialLocale = cookieStore.get('vabo-lang')?.value ?? 'en';
+  const locale = await getLocale();
+  const messages = await getMessages();
 
   return (
-    <html lang={initialLocale} suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <body>
         <InitColorSchemeScript
           attribute={themeConfig.cssVariables.colorSchemeSelector}
@@ -50,7 +50,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
           defaultMode={themeConfig.defaultMode}
         />
 
-        <LangProvider initialLocale={initialLocale}>
+        <NextIntlClientProvider locale={locale} messages={messages}>
           <SettingsProvider defaultSettings={defaultSettings}>
             <LocalizationProvider>
               <AppRouterCacheProvider options={{ key: 'css' }}>
@@ -69,7 +69,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
               </AppRouterCacheProvider>
             </LocalizationProvider>
           </SettingsProvider>
-        </LangProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

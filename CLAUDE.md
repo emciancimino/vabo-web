@@ -2,10 +2,13 @@
 
 ## Regole di progetto
 - Il nome del prodotto è **vabo** — la v è sempre minuscola, ovunque (testi, config, metadata, commenti)
-- Il portale deve essere **responsive mobile-first**
-- Accessibilità minima: **WCAG 2.1 AA** — target **AAA** dove possibile
-  - Contrasto colori, label su form, focus visibile, aria-label su elementi interattivi, semantica HTML corretta
-- Il portale è **multilanguage** — ogni stringa visibile all'utente deve essere predisposta per la traduzione
+- **Responsive mobile-first** — ogni componente deve funzionare su mobile prima che su desktop
+- **Accessibilità WCAG 2.1 AA** minimo, target AAA — contrasto, label, focus visibile, aria-label, semantica HTML
+- **Multilanguage** — ogni stringa visibile all'utente passa per next-intl; nessuna stringa hardcoded nei componenti
+- **SEO** — ogni pagina ha `<title>` e `<meta description>` via `export const metadata`; immagini con `alt`; heading gerarchici; URL semantici
+- **Sicurezza** — nessun segreto in bundle client; sanitizzare input utente; Content Security Policy; nessuna dipendenza inutile
+- **Prestazioni** — lazy load componenti pesanti; ottimizzare immagini con `next/image`; minimizzare bundle client; misurare con Lighthouse prima del merge
+- **Scalabilità** — nessuna logica di business nei componenti UI; separare concerns (UI / hooks / API); progettare per team separati
 
 ## Stack
 - **Framework**: Next.js 16 (App Router) — React 19
@@ -101,11 +104,15 @@ Sempre **vabo** con v minuscola — mai "Vabo", "VABO" o altre varianti.
 - Testare con tastiera prima di considerare un componente completo.
 
 ### Multilanguage
-- Lingue supportate: **EN** (default), **IT**, **FR**, **DE** — config in `src/layouts/langs-config.ts`
-- La lingua è persistita via cookie `vabo-lang` — leggibile server-side, nessun flash di hydration
-- Ogni componente accede alla lingua corrente via `useLang()` da `src/providers/lang-provider`
-- Nessuna stringa UI hardcoded nei componenti — preparare sempre i18n key anche se la libreria di traduzione (next-intl) non è ancora integrata
-- Il layer `LocalizationProvider` passa il locale ad AdapterDayjs — i date picker si adattano automaticamente
+- **Libreria**: `next-intl` — integrata con Next.js App Router (server + client components)
+- **Lingue supportate**: EN (default), IT, FR, DE — config in `src/layouts/langs-config.ts`
+- **File traduzioni**: `messages/{locale}.json` — struttura flat con namespace (`common`, `nav`, `auth`, `errors`, …)
+- **Persistenza**: cookie `vabo-lang` (1 anno) — leggibile server-side, nessun flash di hydration al reload
+- **Cambio lingua**: imposta cookie + `window.location.reload()` — il server rilancia con il locale corretto
+- **Nei componenti**: usare sempre `useTranslations('namespace')` per stringhe client-side; `getTranslations` per server components
+- **Hook `useLang()`** in `src/providers/lang-provider` — espone `{ locale, setLocale }` per il language popover
+- **Aggiungere una nuova stringa**: aggiungerla in `messages/en.json` e in tutti gli altri file lingua prima di usarla
+- I date picker si adattano automaticamente tramite `LocalizationProvider` (AdapterDayjs riceve il locale)
 
 ### Zone UI template
 - Importare solo: `theme/`, `components/`, `layouts/` — mai `sections/`, `_mock/`, `types/`, demo pages
