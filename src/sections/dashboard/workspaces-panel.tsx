@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 
 import Box from '@mui/material/Box';
@@ -40,21 +40,22 @@ export function WorkspacesPanel() {
   const [name, setName] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
-  const load = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      setWorkspaces(await fetchMyWorkspaces());
-    } catch {
-      setError(t('loadError'));
-    } finally {
-      setLoading(false);
-    }
-  }, [t]);
-
   useEffect(() => {
-    load();
-  }, [load]);
+    let active = true;
+    (async () => {
+      try {
+        const items = await fetchMyWorkspaces();
+        if (active) setWorkspaces(items);
+      } catch {
+        if (active) setError(t('loadError'));
+      } finally {
+        if (active) setLoading(false);
+      }
+    })();
+    return () => {
+      active = false;
+    };
+  }, [t]);
 
   const handleCreate = async () => {
     const trimmed = name.trim();
