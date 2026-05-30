@@ -17,7 +17,8 @@
   },
   "nav": {
     "home": "Home",
-    "support": "Supporto"
+    "support": "Supporto",
+    "dashboard": "Dashboard"
   },
   "auth": {
     "signIn": "Accedi",
@@ -47,7 +48,17 @@
     "confirmPassword": "Conferma password",
     "noAccount": "Non hai un account?",
     "hasAccount": "Hai già un account?",
-    "tagline": "Il tuo spazio creativo,\nall in one place."
+    "tagline": "Il tuo spazio creativo,\ntutto in un unico posto.",
+    "strength": {
+      "weak": "Debole",
+      "fair": "Discreta",
+      "good": "Buona",
+      "strong": "Forte",
+      "ruleMinLength": "Almeno 8 caratteri",
+      "ruleUppercase": "Almeno una lettera maiuscola",
+      "ruleNumber": "Almeno un numero",
+      "ruleSpecial": "Almeno un carattere speciale"
+    }
   },
   "errors": {
     "notFound": "Pagina non trovata",

@@ -41,7 +41,7 @@ export function SignInView() {
     setErrorMsg('');
     try {
       await authSignIn({ email: data.email, password: data.password });
-      router.push('/');
+      router.push(paths.dashboard);
     } catch (error) {
       setErrorMsg(getAuthErrorMessage(error));
     }

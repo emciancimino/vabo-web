@@ -41,9 +41,9 @@ export async function proxy(request: NextRequest) {
   const isAuthRoute = AUTH_ROUTES.some((r) => pathname === r || pathname.startsWith(r + '/'));
   const isProtectedRoute = PROTECTED_ROUTES.some((r) => pathname.startsWith(r));
 
-  // Logged-in user hitting an auth page → send to home
+  // Logged-in user hitting an auth page → send to dashboard
   if (isAuthenticated && isAuthRoute) {
-    return NextResponse.redirect(new URL('/', request.url));
+    return NextResponse.redirect(new URL(paths.dashboard, request.url));
   }
 
   // Unauthenticated user hitting a protected page → send to sign-in

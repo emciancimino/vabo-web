@@ -2,6 +2,7 @@ import { RHFCode } from './rhf-code';
 import { RHFRating } from './rhf-rating';
 import { RHFSlider } from './rhf-slider';
 import { RHFTextField } from './rhf-text-field';
+import { RHFPasswordField } from './rhf-password-field';
 import { RHFRadioGroup } from './rhf-radio-group';
 import { RHFPhoneInput } from './rhf-phone-input';
 import { RHFNumberInput } from './rhf-number-input';
@@ -21,6 +22,7 @@ export const Field = {
   Slider: RHFSlider,
   Rating: RHFRating,
   Text: RHFTextField,
+  Password: RHFPasswordField,
   Phone: RHFPhoneInput,
   Checkbox: RHFCheckbox,
   RadioGroup: RHFRadioGroup,

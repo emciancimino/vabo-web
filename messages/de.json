@@ -17,7 +17,8 @@
   },
   "nav": {
     "home": "Startseite",
-    "support": "Support"
+    "support": "Support",
+    "dashboard": "Dashboard"
   },
   "auth": {
     "signIn": "Anmelden",
@@ -47,7 +48,17 @@
     "confirmPassword": "Passwort bestätigen",
     "noAccount": "Noch kein Konto?",
     "hasAccount": "Bereits ein Konto?",
-    "tagline": "Dein kreativer Bereich,\nalles an einem Ort."
+    "tagline": "Dein kreativer Bereich,\nalles an einem Ort.",
+    "strength": {
+      "weak": "Schwach",
+      "fair": "Mäßig",
+      "good": "Gut",
+      "strong": "Stark",
+      "ruleMinLength": "Mindestens 8 Zeichen",
+      "ruleUppercase": "Mindestens ein Großbuchstabe",
+      "ruleNumber": "Mindestens eine Zahl",
+      "ruleSpecial": "Mindestens ein Sonderzeichen"
+    }
   },
   "errors": {
     "notFound": "Seite nicht gefunden",

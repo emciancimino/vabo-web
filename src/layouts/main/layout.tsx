@@ -21,6 +21,8 @@ import { usePathname } from 'src/routes/hooks';
 
 import { Logo } from 'src/components/logo';
 
+import { useAuthUser } from 'src/hooks/use-auth-user';
+
 import { Footer } from './footer';
 import { langs } from '../langs-config';
 import { NavMobile } from './nav/mobile';
@@ -32,6 +34,7 @@ import { Searchbar } from '../components/searchbar';
 import { MenuButton } from '../components/menu-button';
 import { LayoutSection } from '../core/layout-section';
 import { HeaderSection } from '../core/header-section';
+import { UserButton } from '../components/user-button';
 import { SettingsButton } from '../components/settings-button';
 import { LanguagePopover } from '../components/language-popover';
 
@@ -60,6 +63,7 @@ export function MainLayout({
 }: MainLayoutProps) {
   const t = useTranslations('auth');
   const pathname = usePathname();
+  const { user, loading } = useAuthUser();
 
   const { value: open, onFalse: onClose, onTrue: onOpen } = useBoolean();
 
@@ -119,12 +123,12 @@ export function MainLayout({
             open={open}
             onClose={onClose}
             slots={{
-              bottomArea: (
+              bottomArea: !loading && !user ? (
                 <>
                   <Divider />
                   {renderAuthButtons('vertical')}
                 </>
-              ),
+              ) : undefined,
             }}
           />
 
@@ -152,10 +156,16 @@ export function MainLayout({
           {/** @slot Settings button */}
           <SettingsButton />
 
-          {/** @slot Auth buttons — desktop only */}
-          <Box sx={(theme) => ({ display: 'none', [theme.breakpoints.up(layoutQuery)]: { display: 'flex' } })}>
-            {renderAuthButtons('horizontal')}
-          </Box>
+          {/** @slot User button or auth buttons */}
+          {!loading && (
+            user ? (
+              <UserButton user={user} />
+            ) : (
+              <Box sx={(theme) => ({ display: 'none', [theme.breakpoints.up(layoutQuery)]: { display: 'flex' } })}>
+                {renderAuthButtons('horizontal')}
+              </Box>
+            )
+          )}
         </Box>
       ),
     };

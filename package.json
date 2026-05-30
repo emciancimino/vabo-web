@@ -44,7 +44,7 @@
     "es-toolkit": "^1.43.0",
     "framer-motion": "^12.23.26",
     "minimal-shared": "^1.1.5",
-    "mui-one-time-password-input": "^5.0.0",
+    "mui-one-time-password-input": "^7.0.0",
     "next": "^16.0.10",
     "next-intl": "^4.13.0",
     "nprogress": "^0.2.0",

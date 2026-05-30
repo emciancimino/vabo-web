@@ -17,7 +17,8 @@
   },
   "nav": {
     "home": "Home",
-    "support": "Support"
+    "support": "Support",
+    "dashboard": "Dashboard"
   },
   "auth": {
     "signIn": "Sign in",
@@ -47,7 +48,17 @@
     "confirmPassword": "Confirm password",
     "noAccount": "Don't have an account?",
     "hasAccount": "Already have an account?",
-    "tagline": "Your creative space,\nall in one place."
+    "tagline": "Your creative space,\nall in one place.",
+    "strength": {
+      "weak": "Weak",
+      "fair": "Fair",
+      "good": "Good",
+      "strong": "Strong",
+      "ruleMinLength": "At least 8 characters",
+      "ruleUppercase": "At least one uppercase letter",
+      "ruleNumber": "At least one number",
+      "ruleSpecial": "At least one special character"
+    }
   },
   "errors": {
     "notFound": "Page not found",

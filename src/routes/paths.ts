@@ -10,6 +10,10 @@ export const paths = {
     verify: '/verify',
   },
   /**
+   * App
+   */
+  dashboard: '/dashboard',
+  /**
    * Common
    */
   maintenance: '/maintenance',
