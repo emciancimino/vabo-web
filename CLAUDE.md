@@ -9,6 +9,13 @@
 - **Sicurezza** — nessun segreto in bundle client; sanitizzare input utente; Content Security Policy; nessuna dipendenza inutile
 - **Prestazioni** — lazy load componenti pesanti; ottimizzare immagini con `next/image`; minimizzare bundle client; misurare con Lighthouse prima del merge
 - **Scalabilità** — nessuna logica di business nei componenti UI; separare concerns (UI / hooks / API); progettare per team separati
+- **Criticità mai posticipate** — ogni criticità di sicurezza o scalabilità individuata va affrontata subito, nello stesso intervento, non rimandata a un "poi". Se per qualche motivo non è risolvibile immediatamente, va comunque scritta come regola esplicita qui (non lasciata implicita o solo a voce).
+
+### Accesso al BE — sempre via BFF
+- Il browser non chiama mai direttamente il gateway GraphQL. Tutte le chiamate passano dalla Route Handler same-origin `app/api/graphql/route.ts` (BFF).
+- Motivi: niente CORS, URL del gateway fuori dal bundle (`API_URL` server-only, non `NEXT_PUBLIC_`), token Cognito letto dai cookie Amplify SSR lato server (mai maneggiato dal client).
+- **Persisted operations**: il client invia solo un `operationId` + variabili; il BFF inoltra esclusivamente query del registro `src/lib/api/graphql-operations.ts`. Nuova operazione = nuova voce nel registro. Mai inoltrare query grezze dal client.
+- Il BFF applica: content-type obbligatorio, cap dimensione body, no batching, timeout sul gateway.
 
 ## Stack
 - **Framework**: Next.js 16 (App Router) — React 19

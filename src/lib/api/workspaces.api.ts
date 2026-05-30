@@ -2,6 +2,8 @@ import { graphqlRequest } from './graphql-client';
 
 // ----------------------------------------------------------------------
 // Dominio workspaces — proiezione dei tipi GraphQL del BE.
+// Le query vivono nel registro persisted operations (graphql-operations.ts);
+// qui si referenziano solo per `operationId`.
 // ----------------------------------------------------------------------
 
 export interface Workspace {
@@ -15,35 +17,9 @@ export interface Workspace {
 
 // ----------------------------------------------------------------------
 
-const MY_WORKSPACES_QUERY = /* GraphQL */ `
-  query MyWorkspaces {
-    myWorkspaces {
-      id
-      name
-      slug
-      ownerId
-      createdAt
-      updatedAt
-    }
-  }
-`;
-
-const CREATE_WORKSPACE_MUTATION = /* GraphQL */ `
-  mutation CreateWorkspace($input: CreateWorkspaceInput!) {
-    createWorkspace(input: $input) {
-      id
-      name
-      slug
-      ownerId
-      createdAt
-      updatedAt
-    }
-  }
-`;
-
 /** I workspace di cui l'utente autenticato è membro (qualsiasi ruolo). */
 export async function fetchMyWorkspaces(): Promise<Workspace[]> {
-  const data = await graphqlRequest<{ myWorkspaces: Workspace[] }>(MY_WORKSPACES_QUERY);
+  const data = await graphqlRequest<{ myWorkspaces: Workspace[] }>('MyWorkspaces');
   return data.myWorkspaces;
 }
 
@@ -53,7 +29,7 @@ export async function createWorkspace(input: {
   slug: string;
 }): Promise<Workspace> {
   const data = await graphqlRequest<{ createWorkspace: Workspace }, { input: typeof input }>(
-    CREATE_WORKSPACE_MUTATION,
+    'CreateWorkspace',
     { input }
   );
   return data.createWorkspace;

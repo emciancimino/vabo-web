@@ -1,9 +1,12 @@
+import type { GraphQLOperationId } from './graphql-operations';
+
 // ----------------------------------------------------------------------
 // Client GraphQL sottile e tipizzato.
 // - Chiama il BFF same-origin `/api/graphql` (vedi app/api/graphql/route.ts):
 //   niente CORS e l'URL reale del gateway resta server-side.
-// - L'autenticazione è gestita dal proxy via cookie Amplify (SSR): il browser
-//   non maneggia token.
+// - Invia solo l'`operationId` (persisted operation) + variabili: la query grezza
+//   non lascia mai il client né attraversa il proxy. L'auth è gestita dal BFF via
+//   cookie Amplify (SSR): il browser non maneggia token.
 // ----------------------------------------------------------------------
 
 const GRAPHQL_ENDPOINT = '/api/graphql';
@@ -18,17 +21,17 @@ interface GraphQLResponse<T> {
 }
 
 /**
- * Esegue una operazione GraphQL e ritorna i dati tipizzati.
+ * Esegue un'operazione GraphQL registrata e ritorna i dati tipizzati.
  * Lancia un Error con il primo messaggio in caso di errori GraphQL o HTTP.
  */
 export async function graphqlRequest<TData, TVariables = Record<string, unknown>>(
-  query: string,
+  operationId: GraphQLOperationId,
   variables?: TVariables
 ): Promise<TData> {
   const res = await fetch(GRAPHQL_ENDPOINT, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ query, variables }),
+    body: JSON.stringify({ operationId, variables }),
   });
 
   if (!res.ok) {
