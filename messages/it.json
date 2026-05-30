@@ -67,7 +67,6 @@
     "slugLabel": "Slug",
     "create": "Crea workspace",
     "creating": "Creazione…",
-    "ownerBadge": "Proprietario",
     "slugHelper": "Lettere minuscole, cifre e trattini. Usato nell'URL del workspace.",
     "loadError": "Impossibile caricare i tuoi workspace.",
     "createError": "Impossibile creare il workspace. Riprova.",

@@ -67,7 +67,6 @@
     "slugLabel": "Slug",
     "create": "Workspace erstellen",
     "creating": "Wird erstellt…",
-    "ownerBadge": "Eigentümer",
     "slugHelper": "Kleinbuchstaben, Ziffern und Bindestriche. Wird in der Workspace-URL verwendet.",
     "loadError": "Deine Workspaces konnten nicht geladen werden.",
     "createError": "Workspace konnte nicht erstellt werden. Bitte versuche es erneut.",

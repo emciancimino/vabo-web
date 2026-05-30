@@ -17,8 +17,8 @@ import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
 
 import {
-  type Role,
   type Workspace,
+  roleLabelKey,
   createWorkspace,
   fetchMyWorkspaces,
 } from 'src/lib/api/workspaces.api';
@@ -33,15 +33,6 @@ function slugify(value: string): string {
     .trim()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
-}
-
-/** Chiave di traduzione per un ruolo (namespace `workspaces`). */
-function roleKey(role: Role): 'roleViewer' | 'roleContributor' | 'roleAdmin' | 'roleOwner' {
-  return `role${role.charAt(0)}${role.slice(1).toLowerCase()}` as
-    | 'roleViewer'
-    | 'roleContributor'
-    | 'roleAdmin'
-    | 'roleOwner';
 }
 
 export function WorkspacesPanel() {
@@ -168,7 +159,7 @@ export function WorkspacesPanel() {
                 size="small"
                 color={ws.viewerRole === 'OWNER' ? 'primary' : 'default'}
                 variant="soft"
-                label={t(roleKey(ws.viewerRole))}
+                label={t(roleLabelKey(ws.viewerRole))}
               />
             </Box>
           ))}

@@ -8,6 +8,13 @@ import { graphqlRequest } from './graphql-client';
 
 export type Role = 'VIEWER' | 'CONTRIBUTOR' | 'ADMIN' | 'OWNER';
 
+export type RoleLabelKey = 'roleViewer' | 'roleContributor' | 'roleAdmin' | 'roleOwner';
+
+/** Chiave i18n (namespace `workspaces`) per la label di un ruolo. */
+export function roleLabelKey(role: Role): RoleLabelKey {
+  return `role${role.charAt(0)}${role.slice(1).toLowerCase()}` as RoleLabelKey;
+}
+
 export interface Workspace {
   id: string;
   name: string;

@@ -67,7 +67,6 @@
     "slugLabel": "Slug",
     "create": "Créer un espace de travail",
     "creating": "Création…",
-    "ownerBadge": "Propriétaire",
     "slugHelper": "Lettres minuscules, chiffres et tirets. Utilisé dans l'URL de l'espace de travail.",
     "loadError": "Impossible de charger vos espaces de travail.",
     "createError": "Impossible de créer l'espace de travail. Veuillez réessayer.",

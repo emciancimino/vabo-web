@@ -24,6 +24,7 @@ import {
   type Member,
   type Workspace,
   removeMember,
+  roleLabelKey,
   fetchWorkspace,
   addMemberByEmail,
   fetchWorkspaceMembers,
@@ -61,17 +62,7 @@ export function WorkspaceDetail({ workspaceId }: { workspaceId: string }) {
   const [newRole, setNewRole] = useState<Role>('VIEWER');
   const [submitting, setSubmitting] = useState(false);
 
-  const roleLabel = useCallback(
-    (role: Role) =>
-      t(
-        `role${role.charAt(0)}${role.slice(1).toLowerCase()}` as
-          | 'roleViewer'
-          | 'roleContributor'
-          | 'roleAdmin'
-          | 'roleOwner'
-      ),
-    [t]
-  );
+  const roleLabel = useCallback((role: Role) => t(roleLabelKey(role)), [t]);
 
   const messageForError = useCallback(
     (err: unknown): string => {
