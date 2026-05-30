@@ -79,7 +79,7 @@
     "notFound": "Workspace nicht gefunden oder kein Zugriff.",
     "membersTitle": "Mitglieder",
     "addMember": "Mitglied hinzufügen",
-    "userIdLabel": "Benutzer-ID",
+    "emailLabel": "Auf vabo verwendete E-Mail",
     "roleLabel": "Rolle",
     "add": "Hinzufügen",
     "remove": "Entfernen",
@@ -93,6 +93,8 @@
     "errRemoveHigher": "Du kannst kein Mitglied mit einer höheren Rolle als deiner entfernen.",
     "errRemoveLastOwner": "Du kannst den letzten Eigentümer des Workspace nicht entfernen.",
     "errGrantOwner": "Eigentümerschaft kann nicht vergeben werden. Übertrage stattdessen die Eigentümerschaft.",
+    "errUserNotFound": "Mit dieser E-Mail ist kein vabo-Konto registriert.",
+    "errProfileNotConfirmed": "Dieser Benutzer hat sein vabo-Profil noch nicht bestätigt.",
     "memberActionError": "Die Aktion konnte nicht abgeschlossen werden. Bitte versuche es erneut."
   },
   "errors": {

@@ -53,16 +53,22 @@ export const GRAPHQL_OPERATIONS = {
         role
         grantedBy
         grantedAt
+        email
+        firstName
+        lastName
       }
     }
   `,
-  AddMember: /* GraphQL */ `
-    mutation AddMember($workspaceId: ID!, $userId: ID!, $role: Role!) {
-      addMember(workspaceId: $workspaceId, userId: $userId, role: $role) {
+  AddMemberByEmail: /* GraphQL */ `
+    mutation AddMemberByEmail($workspaceId: ID!, $email: String!, $role: Role!) {
+      addMemberByEmail(workspaceId: $workspaceId, email: $email, role: $role) {
         userId
         role
         grantedBy
         grantedAt
+        email
+        firstName
+        lastName
       }
     }
   `,

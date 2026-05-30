@@ -23,9 +23,9 @@ import {
   type Role,
   type Member,
   type Workspace,
-  addMember,
   removeMember,
   fetchWorkspace,
+  addMemberByEmail,
   fetchWorkspaceMembers,
 } from 'src/lib/api/workspaces.api';
 import { GraphQLRequestError } from 'src/lib/api/graphql-client';
@@ -35,6 +35,17 @@ import { GraphQLRequestError } from 'src/lib/api/graphql-client';
 // OWNER non è assegnabile: la proprietà si stabilisce alla creazione e cambia
 // solo via trasferimento. L'add-member offre solo i ruoli concedibili.
 const ASSIGNABLE_ROLES: Role[] = ['VIEWER', 'CONTRIBUTOR', 'ADMIN'];
+
+/** True se il membro ha un nome/cognome dal profilo. */
+function hasName(m: Member): boolean {
+  return Boolean(m.firstName?.trim() || m.lastName?.trim());
+}
+
+/** Etichetta primaria del membro: nome completo → email → userId (fallback). */
+function memberName(m: Member): string {
+  const full = `${m.firstName ?? ''} ${m.lastName ?? ''}`.trim();
+  return full || m.email || m.userId;
+}
 
 export function WorkspaceDetail({ workspaceId }: { workspaceId: string }) {
   const t = useTranslations('workspaces');
@@ -46,7 +57,7 @@ export function WorkspaceDetail({ workspaceId }: { workspaceId: string }) {
   const [notFound, setNotFound] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const [newUserId, setNewUserId] = useState('');
+  const [newEmail, setNewEmail] = useState('');
   const [newRole, setNewRole] = useState<Role>('VIEWER');
   const [submitting, setSubmitting] = useState(false);
 
@@ -74,6 +85,10 @@ export function WorkspaceDetail({ workspaceId }: { workspaceId: string }) {
             return t('errRemoveLastOwner');
           case 'CANNOT_GRANT_OWNER':
             return t('errGrantOwner');
+          case 'USER_NOT_FOUND':
+            return t('errUserNotFound');
+          case 'PROFILE_NOT_CONFIRMED':
+            return t('errProfileNotConfirmed');
           case 'FORBIDDEN':
             return t('errForbidden');
           default:
@@ -113,14 +128,14 @@ export function WorkspaceDetail({ workspaceId }: { workspaceId: string }) {
   }, [workspaceId, t]);
 
   const handleAdd = async () => {
-    const userId = newUserId.trim();
-    if (!userId) return;
+    const email = newEmail.trim();
+    if (!email) return;
     setSubmitting(true);
     setError(null);
     try {
-      await addMember(workspaceId, userId, newRole);
+      await addMemberByEmail(workspaceId, email, newRole);
       await loadMembers();
-      setNewUserId('');
+      setNewEmail('');
       setNewRole('VIEWER');
     } catch (err) {
       setError(messageForError(err));
@@ -198,13 +213,18 @@ export function WorkspaceDetail({ workspaceId }: { workspaceId: string }) {
             >
               <Box sx={{ minWidth: 0 }}>
                 <Typography variant="subtitle2" noWrap>
-                  {m.userId}
+                  {memberName(m)}
                   {user?.userId === m.userId && (
                     <Typography component="span" variant="caption" sx={{ ml: 1, color: 'text.secondary' }}>
                       ({t('you')})
                     </Typography>
                   )}
                 </Typography>
+                {hasName(m) && m.email && (
+                  <Typography variant="caption" sx={{ color: 'text.secondary' }} noWrap>
+                    {m.email}
+                  </Typography>
+                )}
               </Box>
               <Stack direction="row" spacing={1} sx={{ alignItems: 'center', flexShrink: 0 }}>
                 <Chip
@@ -244,9 +264,10 @@ export function WorkspaceDetail({ workspaceId }: { workspaceId: string }) {
           <TextField
             fullWidth
             size="small"
-            label={t('userIdLabel')}
-            value={newUserId}
-            onChange={(e) => setNewUserId(e.target.value)}
+            type="email"
+            label={t('emailLabel')}
+            value={newEmail}
+            onChange={(e) => setNewEmail(e.target.value)}
             disabled={submitting}
           />
           <TextField
@@ -268,7 +289,7 @@ export function WorkspaceDetail({ workspaceId }: { workspaceId: string }) {
             type="submit"
             variant="contained"
             loading={submitting}
-            disabled={!newUserId.trim()}
+            disabled={!newEmail.trim()}
             sx={{ flexShrink: 0 }}
           >
             {t('add')}

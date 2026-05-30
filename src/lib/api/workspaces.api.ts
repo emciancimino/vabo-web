@@ -22,6 +22,10 @@ export interface Member {
   role: Role;
   grantedBy: string;
   grantedAt: string;
+  // Campi profilo: null se l'utente non ha ancora un profilo vabo.
+  email: string | null;
+  firstName: string | null;
+  lastName: string | null;
 }
 
 // ----------------------------------------------------------------------
@@ -61,17 +65,21 @@ export async function fetchWorkspaceMembers(workspaceId: string): Promise<Member
   return data.workspaceMembers;
 }
 
-/** Assegna un ruolo a un utente. Richiede ADMIN+; non si può concedere un ruolo superiore al proprio. */
-export async function addMember(
+/**
+ * Aggiunge un membro tramite l'email di registrazione vabo. Richiede ADMIN+; l'utente
+ * deve essere registrato e avere un profilo confermato; non si può concedere OWNER né un
+ * ruolo superiore al proprio.
+ */
+export async function addMemberByEmail(
   workspaceId: string,
-  userId: string,
+  email: string,
   role: Role
 ): Promise<Member> {
   const data = await graphqlRequest<
-    { addMember: Member },
-    { workspaceId: string; userId: string; role: Role }
-  >('AddMember', { workspaceId, userId, role });
-  return data.addMember;
+    { addMemberByEmail: Member },
+    { workspaceId: string; email: string; role: Role }
+  >('AddMemberByEmail', { workspaceId, email, role });
+  return data.addMemberByEmail;
 }
 
 /** Rimuove un membro. Richiede ADMIN+; non si può rimuovere un ruolo superiore al proprio né l'ultimo OWNER. */

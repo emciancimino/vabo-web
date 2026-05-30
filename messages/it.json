@@ -79,7 +79,7 @@
     "notFound": "Workspace non trovato, o non hai accesso.",
     "membersTitle": "Membri",
     "addMember": "Aggiungi un membro",
-    "userIdLabel": "ID utente",
+    "emailLabel": "Email usata su vabo",
     "roleLabel": "Ruolo",
     "add": "Aggiungi",
     "remove": "Rimuovi",
@@ -93,6 +93,8 @@
     "errRemoveHigher": "Non puoi rimuovere un membro con un ruolo superiore al tuo.",
     "errRemoveLastOwner": "Non puoi rimuovere l'ultimo proprietario del workspace.",
     "errGrantOwner": "La proprietà non può essere concessa. Trasferisci invece la proprietà.",
+    "errUserNotFound": "Nessun account vabo è registrato con questa email.",
+    "errProfileNotConfirmed": "Questo utente non ha ancora confermato il suo profilo vabo.",
     "memberActionError": "Operazione non riuscita. Riprova."
   },
   "errors": {
