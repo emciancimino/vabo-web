@@ -19,6 +19,7 @@ export const GRAPHQL_OPERATIONS = {
         ownerId
         createdAt
         updatedAt
+        viewerRole
       }
     }
   `,
@@ -31,6 +32,7 @@ export const GRAPHQL_OPERATIONS = {
         ownerId
         createdAt
         updatedAt
+        viewerRole
       }
     }
   `,
@@ -43,6 +45,7 @@ export const GRAPHQL_OPERATIONS = {
         ownerId
         createdAt
         updatedAt
+        viewerRole
       }
     }
   `,

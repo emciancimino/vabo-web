@@ -6,6 +6,8 @@ import { graphqlRequest } from './graphql-client';
 // qui si referenziano solo per `operationId`.
 // ----------------------------------------------------------------------
 
+export type Role = 'VIEWER' | 'CONTRIBUTOR' | 'ADMIN' | 'OWNER';
+
 export interface Workspace {
   id: string;
   name: string;
@@ -13,9 +15,9 @@ export interface Workspace {
   ownerId: string;
   createdAt: string;
   updatedAt: string;
+  /** Ruolo dell'utente corrente su questo workspace. */
+  viewerRole: Role;
 }
-
-export type Role = 'VIEWER' | 'CONTRIBUTOR' | 'ADMIN' | 'OWNER';
 
 export interface Member {
   userId: string;
