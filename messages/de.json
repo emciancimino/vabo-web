@@ -94,6 +94,12 @@
     "errGrantOwner": "Eigentümerschaft kann nicht vergeben werden. Übertrage stattdessen die Eigentümerschaft.",
     "errUserNotFound": "Mit dieser E-Mail ist kein vabo-Konto registriert.",
     "errProfileNotConfirmed": "Dieser Benutzer hat sein vabo-Profil noch nicht bestätigt.",
+    "errWorkspaceNotEmpty": "Dieser Workspace enthält noch Inhalte. Lösche sie, bevor du den Workspace löschst.",
+    "dangerZone": "Gefahrenzone",
+    "deleteWorkspace": "Workspace löschen",
+    "deleteWorkspaceDesc": "Löscht diesen Workspace endgültig und entzieht allen den Zugriff. Nicht umkehrbar. Nur ein leerer Workspace kann gelöscht werden.",
+    "deleteConfirmPrompt": "Gib den Workspace-Namen {name} ein, um zu bestätigen.",
+    "deleteConfirmLabel": "Workspace-Name",
     "memberActionError": "Die Aktion konnte nicht abgeschlossen werden. Bitte versuche es erneut."
   },
   "errors": {

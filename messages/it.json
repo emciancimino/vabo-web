@@ -94,6 +94,12 @@
     "errGrantOwner": "La proprietà non può essere concessa. Trasferisci invece la proprietà.",
     "errUserNotFound": "Nessun account vabo è registrato con questa email.",
     "errProfileNotConfirmed": "Questo utente non ha ancora confermato il suo profilo vabo.",
+    "errWorkspaceNotEmpty": "Questo workspace contiene ancora contenuti. Eliminali prima di cancellare il workspace.",
+    "dangerZone": "Zona pericolosa",
+    "deleteWorkspace": "Elimina workspace",
+    "deleteWorkspaceDesc": "Elimina definitivamente questo workspace e revoca l'accesso a tutti. L'azione è irreversibile. Si può eliminare solo un workspace vuoto.",
+    "deleteConfirmPrompt": "Digita il nome del workspace {name} per confermare.",
+    "deleteConfirmLabel": "Nome del workspace",
     "memberActionError": "Operazione non riuscita. Riprova."
   },
   "errors": {

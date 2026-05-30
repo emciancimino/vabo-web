@@ -9,13 +9,18 @@ import Chip from '@mui/material/Chip';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Alert from '@mui/material/Alert';
+import Dialog from '@mui/material/Dialog';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import { paths } from 'src/routes/paths';
+import { useRouter } from 'src/routes/hooks';
 import { RouterLink } from 'src/routes/components';
 
 import { useAuthUser } from 'src/hooks/use-auth-user';
@@ -26,6 +31,7 @@ import {
   removeMember,
   roleLabelKey,
   fetchWorkspace,
+  deleteWorkspace,
   addMemberByEmail,
   fetchWorkspaceMembers,
 } from 'src/lib/api/workspaces.api';
@@ -50,7 +56,9 @@ function memberName(m: Member): string {
 
 export function WorkspaceDetail({ workspaceId }: { workspaceId: string }) {
   const t = useTranslations('workspaces');
+  const tc = useTranslations('common');
   const { user } = useAuthUser();
+  const router = useRouter();
 
   const [workspace, setWorkspace] = useState<Workspace | null>(null);
   const [members, setMembers] = useState<Member[]>([]);
@@ -61,6 +69,10 @@ export function WorkspaceDetail({ workspaceId }: { workspaceId: string }) {
   const [newEmail, setNewEmail] = useState('');
   const [newRole, setNewRole] = useState<Role>('VIEWER');
   const [submitting, setSubmitting] = useState(false);
+
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [confirmText, setConfirmText] = useState('');
+  const [deleting, setDeleting] = useState(false);
 
   const roleLabel = useCallback((role: Role) => t(roleLabelKey(role)), [t]);
 
@@ -80,6 +92,8 @@ export function WorkspaceDetail({ workspaceId }: { workspaceId: string }) {
             return t('errUserNotFound');
           case 'PROFILE_NOT_CONFIRMED':
             return t('errProfileNotConfirmed');
+          case 'WORKSPACE_NOT_EMPTY':
+            return t('errWorkspaceNotEmpty');
           case 'FORBIDDEN':
             return t('errForbidden');
           default:
@@ -145,6 +159,19 @@ export function WorkspaceDetail({ workspaceId }: { workspaceId: string }) {
       setError(messageForError(err));
     } finally {
       setSubmitting(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    setDeleting(true);
+    setError(null);
+    try {
+      await deleteWorkspace(workspaceId);
+      router.push(paths.dashboard); // workspace eliminato → torna alla dashboard
+    } catch (err) {
+      setError(messageForError(err));
+      setConfirmOpen(false);
+      setDeleting(false);
     }
   };
 
@@ -287,6 +314,67 @@ export function WorkspaceDetail({ workspaceId }: { workspaceId: string }) {
           </Button>
         </Stack>
       </Card>
+
+      {workspace?.viewerRole === 'OWNER' && (
+        <Card
+          sx={{ p: 4, border: (theme) => `1px solid ${theme.palette.error.main}` }}
+        >
+          <Typography variant="h5" component="h2" sx={{ mb: 1 }}>
+            {t('dangerZone')}
+          </Typography>
+          <Typography variant="body2" sx={{ color: 'text.secondary', mb: 3 }}>
+            {t('deleteWorkspaceDesc')}
+          </Typography>
+          <Button
+            color="error"
+            variant="contained"
+            onClick={() => {
+              setConfirmText('');
+              setError(null);
+              setConfirmOpen(true);
+            }}
+          >
+            {t('deleteWorkspace')}
+          </Button>
+        </Card>
+      )}
+
+      <Dialog
+        open={confirmOpen}
+        onClose={() => !deleting && setConfirmOpen(false)}
+        fullWidth
+        maxWidth="xs"
+      >
+        <DialogTitle>{t('deleteWorkspace')}</DialogTitle>
+        <DialogContent>
+          <Typography variant="body2" sx={{ mb: 2 }}>
+            {t('deleteConfirmPrompt', { name: workspace?.name ?? '' })}
+          </Typography>
+          <TextField
+            fullWidth
+            size="small"
+            autoFocus
+            label={t('deleteConfirmLabel')}
+            value={confirmText}
+            onChange={(e) => setConfirmText(e.target.value)}
+            disabled={deleting}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button color="inherit" onClick={() => setConfirmOpen(false)} disabled={deleting}>
+            {tc('cancel')}
+          </Button>
+          <Button
+            color="error"
+            variant="contained"
+            loading={deleting}
+            disabled={confirmText !== workspace?.name}
+            onClick={handleDelete}
+          >
+            {t('deleteWorkspace')}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Stack>
   );
 }

@@ -99,3 +99,12 @@ export async function removeMember(workspaceId: string, userId: string): Promise
   >('RemoveMember', { workspaceId, userId });
   return data.removeMember;
 }
+
+/** Cancella un workspace. Richiede OWNER; fallisce se non è vuoto (WORKSPACE_NOT_EMPTY). */
+export async function deleteWorkspace(id: string): Promise<boolean> {
+  const data = await graphqlRequest<{ deleteWorkspace: boolean }, { id: string }>(
+    'DeleteWorkspace',
+    { id }
+  );
+  return data.deleteWorkspace;
+}

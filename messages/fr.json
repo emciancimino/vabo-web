@@ -94,6 +94,12 @@
     "errGrantOwner": "La propriété ne peut pas être accordée. Transférez plutôt la propriété.",
     "errUserNotFound": "Aucun compte vabo n'est enregistré avec cet e-mail.",
     "errProfileNotConfirmed": "Cet utilisateur n'a pas encore confirmé son profil vabo.",
+    "errWorkspaceNotEmpty": "Cet espace de travail contient encore du contenu. Supprimez-le avant de supprimer l'espace.",
+    "dangerZone": "Zone de danger",
+    "deleteWorkspace": "Supprimer l'espace",
+    "deleteWorkspaceDesc": "Supprime définitivement cet espace de travail et révoque l'accès de tous. Action irréversible. Seul un espace vide peut être supprimé.",
+    "deleteConfirmPrompt": "Saisissez le nom de l'espace {name} pour confirmer.",
+    "deleteConfirmLabel": "Nom de l'espace",
     "memberActionError": "L'action n'a pas pu être effectuée. Veuillez réessayer."
   },
   "errors": {

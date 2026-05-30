@@ -80,6 +80,11 @@ export const GRAPHQL_OPERATIONS = {
       removeMember(workspaceId: $workspaceId, userId: $userId)
     }
   `,
+  DeleteWorkspace: /* GraphQL */ `
+    mutation DeleteWorkspace($id: ID!) {
+      deleteWorkspace(id: $id)
+    }
+  `,
 } as const;
 
 export type GraphQLOperationId = keyof typeof GRAPHQL_OPERATIONS;
