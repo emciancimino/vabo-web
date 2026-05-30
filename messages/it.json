@@ -68,7 +68,12 @@
     "create": "Crea workspace",
     "creating": "Creazione…",
     "ownerBadge": "Proprietario",
-    "loadError": "Impossibile caricare i tuoi workspace."
+    "slugHelper": "Lettere minuscole, cifre e trattini. Usato nell'URL del workspace.",
+    "loadError": "Impossibile caricare i tuoi workspace.",
+    "createError": "Impossibile creare il workspace. Riprova.",
+    "slugTaken": "Questo slug è già in uso. Scegline un altro.",
+    "invalidSlug": "Slug non valido: usa lettere minuscole, cifre e trattini singoli.",
+    "invalidName": "Nome non valido."
   },
   "errors": {
     "notFound": "Pagina non trovata",

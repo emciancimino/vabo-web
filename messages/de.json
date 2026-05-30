@@ -68,7 +68,12 @@
     "create": "Workspace erstellen",
     "creating": "Wird erstellt…",
     "ownerBadge": "Eigentümer",
-    "loadError": "Deine Workspaces konnten nicht geladen werden."
+    "slugHelper": "Kleinbuchstaben, Ziffern und Bindestriche. Wird in der Workspace-URL verwendet.",
+    "loadError": "Deine Workspaces konnten nicht geladen werden.",
+    "createError": "Workspace konnte nicht erstellt werden. Bitte versuche es erneut.",
+    "slugTaken": "Dieser Slug ist bereits vergeben. Bitte wähle einen anderen.",
+    "invalidSlug": "Ungültiger Slug: nur Kleinbuchstaben, Ziffern und einzelne Bindestriche.",
+    "invalidName": "Ungültiger Name."
   },
   "errors": {
     "notFound": "Seite nicht gefunden",

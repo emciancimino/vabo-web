@@ -68,7 +68,12 @@
     "create": "Create workspace",
     "creating": "Creating…",
     "ownerBadge": "Owner",
-    "loadError": "Could not load your workspaces."
+    "slugHelper": "Lowercase letters, digits and hyphens. Used in the workspace URL.",
+    "loadError": "Could not load your workspaces.",
+    "createError": "Could not create the workspace. Please try again.",
+    "slugTaken": "This slug is already in use. Please choose another one.",
+    "invalidSlug": "Invalid slug: use lowercase letters, digits and single hyphens.",
+    "invalidName": "Invalid name."
   },
   "errors": {
     "notFound": "Page not found",

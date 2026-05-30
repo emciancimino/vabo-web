@@ -18,6 +18,7 @@ import {
   createWorkspace,
   fetchMyWorkspaces,
 } from 'src/lib/api/workspaces.api';
+import { GraphQLRequestError } from 'src/lib/api/graphql-client';
 
 // ----------------------------------------------------------------------
 
@@ -38,7 +39,32 @@ export function WorkspacesPanel() {
   const [error, setError] = useState<string | null>(null);
 
   const [name, setName] = useState('');
+  const [slug, setSlug] = useState('');
+  const [slugEdited, setSlugEdited] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+
+  // Mappa il codice errore del BE su un messaggio localizzato.
+  const messageForError = (err: unknown): string => {
+    if (err instanceof GraphQLRequestError) {
+      switch (err.code) {
+        case 'SLUG_TAKEN':
+          return t('slugTaken');
+        case 'INVALID_SLUG':
+          return t('invalidSlug');
+        case 'INVALID_NAME':
+          return t('invalidName');
+        default:
+          break;
+      }
+    }
+    return t('createError');
+  };
+
+  // Finché l'utente non tocca lo slug, lo deriviamo dal nome.
+  const handleNameChange = (value: string) => {
+    setName(value);
+    if (!slugEdited) setSlug(slugify(value));
+  };
 
   useEffect(() => {
     let active = true;
@@ -58,16 +84,19 @@ export function WorkspacesPanel() {
   }, [t]);
 
   const handleCreate = async () => {
-    const trimmed = name.trim();
-    if (!trimmed) return;
+    const trimmedName = name.trim();
+    const trimmedSlug = slug.trim();
+    if (!trimmedName || !trimmedSlug) return;
     setSubmitting(true);
     setError(null);
     try {
-      const created = await createWorkspace({ name: trimmed, slug: slugify(trimmed) });
+      const created = await createWorkspace({ name: trimmedName, slug: trimmedSlug });
       setWorkspaces((prev) => [...prev, created]);
       setName('');
+      setSlug('');
+      setSlugEdited(false);
     } catch (err) {
-      setError(err instanceof Error ? err.message : t('loadError'));
+      setError(messageForError(err));
     } finally {
       setSubmitting(false);
     }
@@ -124,7 +153,6 @@ export function WorkspacesPanel() {
 
       <Stack
         component="form"
-        direction={{ xs: 'column', sm: 'row' }}
         spacing={2}
         onSubmit={(e) => {
           e.preventDefault();
@@ -136,15 +164,27 @@ export function WorkspacesPanel() {
           size="small"
           label={t('nameLabel')}
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => handleNameChange(e.target.value)}
           disabled={submitting}
+        />
+        <TextField
+          fullWidth
+          size="small"
+          label={t('slugLabel')}
+          value={slug}
+          onChange={(e) => {
+            setSlug(e.target.value);
+            setSlugEdited(true);
+          }}
+          disabled={submitting}
+          helperText={t('slugHelper')}
         />
         <Button
           type="submit"
           variant="contained"
           loading={submitting}
-          disabled={!name.trim()}
-          sx={{ flexShrink: 0 }}
+          disabled={!name.trim() || !slug.trim()}
+          sx={{ alignSelf: { sm: 'flex-start' } }}
         >
           {submitting ? t('creating') : t('create')}
         </Button>

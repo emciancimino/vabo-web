@@ -13,6 +13,7 @@ const GRAPHQL_ENDPOINT = '/api/graphql';
 
 interface GraphQLError {
   message: string;
+  extensions?: { code?: string };
 }
 
 interface GraphQLResponse<T> {
@@ -21,8 +22,21 @@ interface GraphQLResponse<T> {
 }
 
 /**
+ * Errore GraphQL con `code` stabile (da extensions.code del BE), così la UI può
+ * mappare il codice su un messaggio localizzato invece del testo grezzo.
+ */
+export class GraphQLRequestError extends Error {
+  readonly code?: string;
+  constructor(message: string, code?: string) {
+    super(message);
+    this.name = 'GraphQLRequestError';
+    this.code = code;
+  }
+}
+
+/**
  * Esegue un'operazione GraphQL registrata e ritorna i dati tipizzati.
- * Lancia un Error con il primo messaggio in caso di errori GraphQL o HTTP.
+ * Lancia un GraphQLRequestError (con eventuale `code`) in caso di errori GraphQL o HTTP.
  */
 export async function graphqlRequest<TData, TVariables = Record<string, unknown>>(
   operationId: GraphQLOperationId,
@@ -35,16 +49,17 @@ export async function graphqlRequest<TData, TVariables = Record<string, unknown>
   });
 
   if (!res.ok) {
-    throw new Error(`Network error: ${res.status}`);
+    throw new GraphQLRequestError(`Network error: ${res.status}`);
   }
 
   const json = (await res.json()) as GraphQLResponse<TData>;
 
   if (json.errors?.length) {
-    throw new Error(json.errors[0].message);
+    const first = json.errors[0];
+    throw new GraphQLRequestError(first.message, first.extensions?.code);
   }
   if (!json.data) {
-    throw new Error('Empty GraphQL response');
+    throw new GraphQLRequestError('Empty GraphQL response');
   }
 
   return json.data;
