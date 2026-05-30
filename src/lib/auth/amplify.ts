@@ -11,7 +11,7 @@ export const amplifyConfig: ResourcesConfig = {
         given_name: { required: true },
         family_name: { required: true },
       },
-      passwordFormat: { minLength: 6 },
+      passwordFormat: { minLength: 8 },
     },
   },
 };

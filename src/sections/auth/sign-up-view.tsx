@@ -32,7 +32,7 @@ export function SignUpView() {
 
   const methods = useForm<SignUpSchemaType>({
     resolver: zodResolver(SignUpSchema),
-    defaultValues: { fullName: '', email: '', password: '', confirmPassword: '' },
+    defaultValues: { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' },
   });
 
   const { handleSubmit } = methods;
@@ -40,14 +40,11 @@ export function SignUpView() {
   const onSubmit = handleSubmit(async (data) => {
     setErrorMsg('');
     try {
-      const [firstName, ...rest] = data.fullName.trim().split(' ');
-      const lastName = rest.join(' ') || firstName;
-
       await authSignUp({
         email: data.email,
         password: data.password,
-        firstName,
-        lastName,
+        firstName: data.firstName.trim(),
+        lastName: data.lastName.trim(),
       });
 
       router.push(`${paths.auth.verify}?email=${encodeURIComponent(data.email)}`);

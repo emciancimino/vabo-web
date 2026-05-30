@@ -11,7 +11,7 @@ export const SignInSchema = z.object({
   password: z
     .string()
     .min(1, { message: 'Password is required' })
-    .min(6, { message: 'Password must be at least 6 characters' }),
+    .min(8, { message: 'Password must be at least 8 characters' }),
 });
 
 // ----------------------------------------------------------------------
@@ -20,12 +20,13 @@ export type SignUpSchemaType = z.infer<typeof SignUpSchema>;
 
 export const SignUpSchema = z
   .object({
-    fullName: z.string().min(1, { message: 'Full name is required' }),
+    firstName: z.string().min(1, { message: 'First name is required' }),
+    lastName: z.string().min(1, { message: 'Last name is required' }),
     email: schemaUtils.email(),
     password: z
       .string()
       .min(1, { message: 'Password is required' })
-      .min(6, { message: 'Password must be at least 6 characters' }),
+      .min(8, { message: 'Password must be at least 8 characters' }),
     confirmPassword: z.string().min(1, { message: 'Confirm password is required' }),
   })
   .refine((val) => val.password === val.confirmPassword, {
@@ -52,7 +53,7 @@ export const UpdatePasswordSchema = z
     password: z
       .string()
       .min(1, { message: 'Password is required' })
-      .min(6, { message: 'Password must be at least 6 characters' }),
+      .min(8, { message: 'Password must be at least 8 characters' }),
     confirmPassword: z.string().min(1, { message: 'Confirm password is required' }),
   })
   .refine((val) => val.password === val.confirmPassword, {

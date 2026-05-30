@@ -24,16 +24,31 @@ export function SignUpForm({ sx, ...other }: BoxProps) {
     formState: { isSubmitting },
   } = useFormContext();
 
+  const passwordEndAdornment = (
+    <InputAdornment position="end">
+      <IconButton onClick={showPassword.onToggle} edge="end" aria-label="toggle password visibility">
+        <Iconify icon={showPassword.value ? 'solar:eye-outline' : 'solar:eye-closed-outline'} />
+      </IconButton>
+    </InputAdornment>
+  );
+
   return (
     <Box
       sx={[{ gap: 3, display: 'flex', flexDirection: 'column' }, ...(Array.isArray(sx) ? sx : [sx])]}
       {...other}
     >
-      <Field.Text
-        name="fullName"
-        label={t('fullName')}
-        slotProps={{ inputLabel: { shrink: true } }}
-      />
+      <Box sx={{ gap: 2, display: 'flex', flexDirection: { xs: 'column', sm: 'row' } }}>
+        <Field.Text
+          name="firstName"
+          label={t('firstName')}
+          slotProps={{ inputLabel: { shrink: true } }}
+        />
+        <Field.Text
+          name="lastName"
+          label={t('lastName')}
+          slotProps={{ inputLabel: { shrink: true } }}
+        />
+      </Box>
 
       <Field.Text
         name="email"
@@ -46,36 +61,14 @@ export function SignUpForm({ sx, ...other }: BoxProps) {
         label={t('password')}
         placeholder={t('passwordPlaceholder')}
         type={showPassword.value ? 'text' : 'password'}
-        slotProps={{
-          inputLabel: { shrink: true },
-          input: {
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton onClick={showPassword.onToggle} edge="end" aria-label="toggle password visibility">
-                  <Iconify icon={showPassword.value ? 'solar:eye-outline' : 'solar:eye-closed-outline'} />
-                </IconButton>
-              </InputAdornment>
-            ),
-          },
-        }}
+        slotProps={{ inputLabel: { shrink: true }, input: { endAdornment: passwordEndAdornment } }}
       />
 
       <Field.Text
         name="confirmPassword"
         label={t('confirmPassword')}
         type={showPassword.value ? 'text' : 'password'}
-        slotProps={{
-          inputLabel: { shrink: true },
-          input: {
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton onClick={showPassword.onToggle} edge="end" aria-label="toggle password visibility">
-                  <Iconify icon={showPassword.value ? 'solar:eye-outline' : 'solar:eye-closed-outline'} />
-                </IconButton>
-              </InputAdornment>
-            ),
-          },
-        }}
+        slotProps={{ inputLabel: { shrink: true }, input: { endAdornment: passwordEndAdornment } }}
       />
 
       <Button
