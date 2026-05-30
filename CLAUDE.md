@@ -16,6 +16,9 @@
 - Motivi: niente CORS, URL del gateway fuori dal bundle (`API_URL` server-only, non `NEXT_PUBLIC_`), token Cognito letto dai cookie Amplify SSR lato server (mai maneggiato dal client).
 - **Persisted operations**: il client invia solo un `operationId` + variabili; il BFF inoltra esclusivamente query del registro `src/lib/api/graphql-operations.ts`. Nuova operazione = nuova voce nel registro. Mai inoltrare query grezze dal client.
 - Il BFF applica: content-type obbligatorio, cap dimensione body, no batching, timeout sul gateway.
+- **Funzioni API tipizzate** in `src/lib/api/<dominio>.api.ts`: chiamano `graphqlRequest('OperationId', vars)` e proiettano i tipi del BE. I componenti importano queste funzioni, mai `graphqlRequest` diretto.
+- **Errori → messaggi localizzati**: il BE restituisce `extensions.code` (es. `SLUG_TAKEN`, `WORKSPACE_NOT_EMPTY`); `graphqlRequest` li espone come `GraphQLRequestError.code`. I componenti mappano `code` → stringa next-intl con uno `switch` (`messageForError`), con fallback generico. Mai mostrare il messaggio grezzo del BE (è in inglese e non localizzato).
+- **Azioni distruttive/irreversibili** (es. elimina workspace): conferma esplicita con **digitazione del nome** della risorsa (bottone disabilitato finché il testo non coincide), poi azione + redirect.
 
 ## Stack
 - **Framework**: Next.js 16 (App Router) — React 19
