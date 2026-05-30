@@ -13,6 +13,9 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 
+import { paths } from 'src/routes/paths';
+import { RouterLink } from 'src/routes/components';
+
 import {
   type Workspace,
   createWorkspace,
@@ -127,6 +130,8 @@ export function WorkspacesPanel() {
           {workspaces.map((ws) => (
             <Box
               key={ws.id}
+              component={RouterLink}
+              href={paths.workspace(ws.id)}
               sx={{
                 p: 2,
                 borderRadius: 1,
@@ -135,6 +140,10 @@ export function WorkspacesPanel() {
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 gap: 2,
+                color: 'inherit',
+                textDecoration: 'none',
+                transition: (theme) => theme.transitions.create('background-color'),
+                '&:hover': { bgcolor: 'action.hover' },
               }}
             >
               <Box sx={{ minWidth: 0 }}>

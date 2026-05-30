@@ -34,6 +34,43 @@ export const GRAPHQL_OPERATIONS = {
       }
     }
   `,
+  Workspace: /* GraphQL */ `
+    query Workspace($id: ID!) {
+      workspace(id: $id) {
+        id
+        name
+        slug
+        ownerId
+        createdAt
+        updatedAt
+      }
+    }
+  `,
+  WorkspaceMembers: /* GraphQL */ `
+    query WorkspaceMembers($workspaceId: ID!) {
+      workspaceMembers(workspaceId: $workspaceId) {
+        userId
+        role
+        grantedBy
+        grantedAt
+      }
+    }
+  `,
+  AddMember: /* GraphQL */ `
+    mutation AddMember($workspaceId: ID!, $userId: ID!, $role: Role!) {
+      addMember(workspaceId: $workspaceId, userId: $userId, role: $role) {
+        userId
+        role
+        grantedBy
+        grantedAt
+      }
+    }
+  `,
+  RemoveMember: /* GraphQL */ `
+    mutation RemoveMember($workspaceId: ID!, $userId: ID!) {
+      removeMember(workspaceId: $workspaceId, userId: $userId)
+    }
+  `,
 } as const;
 
 export type GraphQLOperationId = keyof typeof GRAPHQL_OPERATIONS;

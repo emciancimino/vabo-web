@@ -13,6 +13,7 @@ export const paths = {
    * App
    */
   dashboard: '/dashboard',
+  workspace: (id: string) => `/dashboard/workspaces/${id}`,
   /**
    * Common
    */
