@@ -92,6 +92,7 @@
     "errGrantHigher": "Vous ne pouvez pas accorder un rôle supérieur au vôtre.",
     "errRemoveHigher": "Vous ne pouvez pas retirer un membre ayant un rôle supérieur au vôtre.",
     "errRemoveLastOwner": "Vous ne pouvez pas retirer le dernier propriétaire de l'espace de travail.",
+    "errGrantOwner": "La propriété ne peut pas être accordée. Transférez plutôt la propriété.",
     "memberActionError": "L'action n'a pas pu être effectuée. Veuillez réessayer."
   },
   "errors": {

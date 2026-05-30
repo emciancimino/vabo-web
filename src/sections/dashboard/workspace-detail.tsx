@@ -32,7 +32,9 @@ import { GraphQLRequestError } from 'src/lib/api/graphql-client';
 
 // ----------------------------------------------------------------------
 
-const ROLES: Role[] = ['VIEWER', 'CONTRIBUTOR', 'ADMIN', 'OWNER'];
+// OWNER non è assegnabile: la proprietà si stabilisce alla creazione e cambia
+// solo via trasferimento. L'add-member offre solo i ruoli concedibili.
+const ASSIGNABLE_ROLES: Role[] = ['VIEWER', 'CONTRIBUTOR', 'ADMIN'];
 
 export function WorkspaceDetail({ workspaceId }: { workspaceId: string }) {
   const t = useTranslations('workspaces');
@@ -70,6 +72,8 @@ export function WorkspaceDetail({ workspaceId }: { workspaceId: string }) {
             return t('errRemoveHigher');
           case 'CANNOT_REMOVE_LAST_OWNER':
             return t('errRemoveLastOwner');
+          case 'CANNOT_GRANT_OWNER':
+            return t('errGrantOwner');
           case 'FORBIDDEN':
             return t('errForbidden');
           default:
@@ -209,15 +213,17 @@ export function WorkspaceDetail({ workspaceId }: { workspaceId: string }) {
                   variant="soft"
                   label={roleLabel(m.role)}
                 />
-                <Button
-                  size="small"
-                  color="error"
-                  variant="outlined"
-                  disabled={submitting}
-                  onClick={() => handleRemove(m.userId)}
-                >
-                  {t('remove')}
-                </Button>
+                {m.role !== 'OWNER' && (
+                  <Button
+                    size="small"
+                    color="error"
+                    variant="outlined"
+                    disabled={submitting}
+                    onClick={() => handleRemove(m.userId)}
+                  >
+                    {t('remove')}
+                  </Button>
+                )}
               </Stack>
             </Box>
           ))}
@@ -252,7 +258,7 @@ export function WorkspaceDetail({ workspaceId }: { workspaceId: string }) {
             disabled={submitting}
             sx={{ minWidth: 160 }}
           >
-            {ROLES.map((r) => (
+            {ASSIGNABLE_ROLES.map((r) => (
               <MenuItem key={r} value={r}>
                 {roleLabel(r)}
               </MenuItem>

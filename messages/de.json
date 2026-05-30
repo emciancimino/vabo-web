@@ -92,6 +92,7 @@
     "errGrantHigher": "Du kannst keine höhere Rolle als deine eigene vergeben.",
     "errRemoveHigher": "Du kannst kein Mitglied mit einer höheren Rolle als deiner entfernen.",
     "errRemoveLastOwner": "Du kannst den letzten Eigentümer des Workspace nicht entfernen.",
+    "errGrantOwner": "Eigentümerschaft kann nicht vergeben werden. Übertrage stattdessen die Eigentümerschaft.",
     "memberActionError": "Die Aktion konnte nicht abgeschlossen werden. Bitte versuche es erneut."
   },
   "errors": {

@@ -92,6 +92,7 @@
     "errGrantHigher": "Non puoi concedere un ruolo superiore al tuo.",
     "errRemoveHigher": "Non puoi rimuovere un membro con un ruolo superiore al tuo.",
     "errRemoveLastOwner": "Non puoi rimuovere l'ultimo proprietario del workspace.",
+    "errGrantOwner": "La proprietà non può essere concessa. Trasferisci invece la proprietà.",
     "memberActionError": "Operazione non riuscita. Riprova."
   },
   "errors": {

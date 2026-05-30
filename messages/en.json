@@ -92,6 +92,7 @@
     "errGrantHigher": "You can't grant a role higher than your own.",
     "errRemoveHigher": "You can't remove a member with a higher role than yours.",
     "errRemoveLastOwner": "You can't remove the last owner of the workspace.",
+    "errGrantOwner": "Ownership can't be granted. Transfer ownership instead.",
     "memberActionError": "The action could not be completed. Please try again."
   },
   "errors": {
