@@ -2,15 +2,20 @@
 
 import type { ResetPasswordSchemaType } from './components/schema';
 
+import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import Box from '@mui/material/Box';
+import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 
 import { paths } from 'src/routes/paths';
+import { useRouter } from 'src/routes/hooks';
 import { CONFIG } from 'src/global-config';
+
+import { authResetPassword, getAuthErrorMessage } from 'src/lib/api/auth.api';
 
 import { Form, Field } from 'src/components/hook-form';
 
@@ -22,6 +27,8 @@ import { FormReturnLink } from './components/form-return-link';
 
 export function ResetPasswordView() {
   const t = useTranslations('auth');
+  const router = useRouter();
+  const [errorMsg, setErrorMsg] = useState('');
 
   const methods = useForm<ResetPasswordSchemaType>({
     resolver: zodResolver(ResetPasswordSchema),
@@ -33,8 +40,14 @@ export function ResetPasswordView() {
     formState: { isSubmitting },
   } = methods;
 
-  const onSubmit = handleSubmit(async (_data) => {
-    // TODO: integrate with auth API
+  const onSubmit = handleSubmit(async (data) => {
+    setErrorMsg('');
+    try {
+      await authResetPassword({ email: data.email });
+      router.push(`${paths.auth.updatePassword}?email=${encodeURIComponent(data.email)}`);
+    } catch (error) {
+      setErrorMsg(getAuthErrorMessage(error));
+    }
   });
 
   return (
@@ -52,6 +65,12 @@ export function ResetPasswordView() {
         description={t('resetPasswordDesc')}
         sx={{ textAlign: 'center' }}
       />
+
+      {errorMsg && (
+        <Alert severity="error" sx={{ mb: 3 }}>
+          {errorMsg}
+        </Alert>
+      )}
 
       <Form methods={methods} onSubmit={onSubmit}>
         <Box sx={{ gap: 3, display: 'flex', flexDirection: 'column' }}>

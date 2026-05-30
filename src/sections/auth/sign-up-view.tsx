@@ -2,14 +2,19 @@
 
 import type { SignUpSchemaType } from './components/schema';
 
+import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import Link from '@mui/material/Link';
+import Alert from '@mui/material/Alert';
 
 import { paths } from 'src/routes/paths';
+import { useRouter } from 'src/routes/hooks';
 import { RouterLink } from 'src/routes/components';
+
+import { authSignUp, getAuthErrorMessage } from 'src/lib/api/auth.api';
 
 import { Logo } from 'src/components/logo';
 import { Form } from 'src/components/hook-form';
@@ -22,23 +27,33 @@ import { SignUpForm } from './components/sign-up-form';
 
 export function SignUpView() {
   const t = useTranslations('auth');
-
-  const defaultValues: SignUpSchemaType = {
-    fullName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-  };
+  const router = useRouter();
+  const [errorMsg, setErrorMsg] = useState('');
 
   const methods = useForm<SignUpSchemaType>({
     resolver: zodResolver(SignUpSchema),
-    defaultValues,
+    defaultValues: { fullName: '', email: '', password: '', confirmPassword: '' },
   });
 
   const { handleSubmit } = methods;
 
-  const onSubmit = handleSubmit(async (_data) => {
-    // TODO: integrate with auth API
+  const onSubmit = handleSubmit(async (data) => {
+    setErrorMsg('');
+    try {
+      const [firstName, ...rest] = data.fullName.trim().split(' ');
+      const lastName = rest.join(' ') || firstName;
+
+      await authSignUp({
+        email: data.email,
+        password: data.password,
+        firstName,
+        lastName,
+      });
+
+      router.push(`${paths.auth.verify}?email=${encodeURIComponent(data.email)}`);
+    } catch (error) {
+      setErrorMsg(getAuthErrorMessage(error));
+    }
   });
 
   return (
@@ -57,6 +72,12 @@ export function SignUpView() {
         }
         sx={{ mt: { xs: 5, md: 8 }, textAlign: { xs: 'center', md: 'left' } }}
       />
+
+      {errorMsg && (
+        <Alert severity="error" sx={{ mb: 3 }}>
+          {errorMsg}
+        </Alert>
+      )}
 
       <Form methods={methods} onSubmit={onSubmit}>
         <SignUpForm />

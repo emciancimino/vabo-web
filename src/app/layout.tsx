@@ -11,6 +11,7 @@ import { LocalizationProvider } from 'src/locales';
 import { themeOverrides } from 'src/theme/theme-overrides';
 import { themeConfig, ThemeProvider, primary as primaryColor } from 'src/theme';
 
+import { AuthProvider } from 'src/providers';
 import { ProgressBar } from 'src/components/progress-bar';
 import { ScrollToTop } from 'src/components/scroll-to-top';
 import { MotionLazy } from 'src/components/animate/motion-lazy';
@@ -51,6 +52,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         />
 
         <NextIntlClientProvider locale={locale} messages={messages}>
+          <AuthProvider>
           <SettingsProvider defaultSettings={defaultSettings}>
             <LocalizationProvider>
               <AppRouterCacheProvider options={{ key: 'css' }}>
@@ -69,6 +71,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
               </AppRouterCacheProvider>
             </LocalizationProvider>
           </SettingsProvider>
+          </AuthProvider>
         </NextIntlClientProvider>
       </body>
     </html>

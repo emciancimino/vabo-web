@@ -2,15 +2,22 @@
 
 import type { VerifySchemaType } from './components/schema';
 
+import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useCountdownSeconds } from 'minimal-shared/hooks';
 
 import Box from '@mui/material/Box';
+import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 
 import { paths } from 'src/routes/paths';
+import { useRouter } from 'src/routes/hooks';
+import { useSearchParams } from 'src/routes/hooks';
 import { CONFIG } from 'src/global-config';
+
+import { authConfirmSignUp, authResendSignUpCode, getAuthErrorMessage } from 'src/lib/api/auth.api';
 
 import { Form, Field } from 'src/components/hook-form';
 
@@ -23,6 +30,12 @@ import { FormResendCode } from './components/form-resend-code';
 
 export function VerifyView() {
   const t = useTranslations('auth');
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const email = searchParams.get('email') ?? '';
+
+  const [errorMsg, setErrorMsg] = useState('');
+  const { value: countdown, start: startCountdown } = useCountdownSeconds(60);
 
   const methods = useForm<VerifySchemaType>({
     mode: 'onChange',
@@ -35,9 +48,24 @@ export function VerifyView() {
     formState: { isSubmitting },
   } = methods;
 
-  const onSubmit = handleSubmit(async (_data) => {
-    // TODO: integrate with auth API
+  const onSubmit = handleSubmit(async (data) => {
+    setErrorMsg('');
+    try {
+      await authConfirmSignUp({ email, code: data.code });
+      router.push(paths.auth.signIn);
+    } catch (error) {
+      setErrorMsg(getAuthErrorMessage(error));
+    }
   });
+
+  const handleResend = async () => {
+    try {
+      await authResendSignUpCode({ email });
+      startCountdown();
+    } catch (error) {
+      setErrorMsg(getAuthErrorMessage(error));
+    }
+  };
 
   return (
     <>
@@ -54,6 +82,12 @@ export function VerifyView() {
         description={t('verifyDesc')}
         sx={{ textAlign: 'center' }}
       />
+
+      {errorMsg && (
+        <Alert severity="error" sx={{ mb: 3 }}>
+          {errorMsg}
+        </Alert>
+      )}
 
       <Form methods={methods} onSubmit={onSubmit}>
         <Box sx={{ gap: 3, display: 'flex', flexDirection: 'column' }}>
@@ -72,7 +106,11 @@ export function VerifyView() {
         </Box>
       </Form>
 
-      <FormResendCode onResendCode={() => {}} />
+      <FormResendCode
+        onResendCode={handleResend}
+        disabled={countdown > 0}
+        value={countdown}
+      />
 
       <FormReturnLink href={paths.auth.signIn} />
     </>

@@ -10,9 +10,11 @@
     "lint:fix": "eslint --fix src",
     "fm:check": "prettier --check \"src/**/*.{ts,tsx}\"",
     "fm:fix": "prettier --write \"src/**/*.{ts,tsx}\"",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "sync-env": "node scripts/sync-env.mjs"
   },
   "dependencies": {
+    "@aws-amplify/adapter-nextjs": "^1.7.3",
     "@emotion/cache": "^11.14.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
@@ -31,6 +33,7 @@
     "@mui/x-date-pickers": "^8.0.0",
     "@mui/x-tree-view": "^8.0.0",
     "@vis.gl/react-google-maps": "^1.8.3",
+    "aws-amplify": "^6.17.0",
     "dayjs": "^1.11.19",
     "embla-carousel": "^8.6.0",
     "embla-carousel-auto-height": "^8.6.0",
