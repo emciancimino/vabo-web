@@ -53,7 +53,10 @@ const content = `# Auto-generated — do not edit manually.
 NEXT_PUBLIC_COGNITO_USER_POOL_ID=${userPoolId}
 NEXT_PUBLIC_COGNITO_USER_POOL_CLIENT_ID=${clientWebId}
 NEXT_PUBLIC_COGNITO_IDENTITY_POOL_ID=${identityPoolId}
-NEXT_PUBLIC_API_URL=${apiUrl}
+
+# Server-only (non NEXT_PUBLIC): usata dal BFF in app/api/graphql/route.ts.
+# Tenuta fuori dal bundle client così l'URL del gateway non è esposto.
+API_URL=${apiUrl}
 `;
 
 writeFileSync(envLocalPath, content);

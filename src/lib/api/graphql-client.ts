@@ -1,13 +1,12 @@
-import { fetchAuthSession } from 'aws-amplify/auth';
-
 // ----------------------------------------------------------------------
 // Client GraphQL sottile e tipizzato.
-// - Endpoint unico: NEXT_PUBLIC_API_URL/graphql (gateway multi-dominio del BE).
-// - Allega l'access token Cognito come `Authorization: Bearer` quando disponibile.
-//   Le query anonime (es. feed pubblico) funzionano comunque senza token.
+// - Chiama il BFF same-origin `/api/graphql` (vedi app/api/graphql/route.ts):
+//   niente CORS e l'URL reale del gateway resta server-side.
+// - L'autenticazione è gestita dal proxy via cookie Amplify (SSR): il browser
+//   non maneggia token.
 // ----------------------------------------------------------------------
 
-const GRAPHQL_ENDPOINT = `${process.env.NEXT_PUBLIC_API_URL ?? ''}/graphql`;
+const GRAPHQL_ENDPOINT = '/api/graphql';
 
 interface GraphQLError {
   message: string;
@@ -18,16 +17,6 @@ interface GraphQLResponse<T> {
   errors?: GraphQLError[];
 }
 
-/** Recupera l'access token corrente, o `null` se l'utente è anonimo. */
-async function getAccessToken(): Promise<string | null> {
-  try {
-    const session = await fetchAuthSession();
-    return session.tokens?.accessToken?.toString() ?? null;
-  } catch {
-    return null;
-  }
-}
-
 /**
  * Esegue una operazione GraphQL e ritorna i dati tipizzati.
  * Lancia un Error con il primo messaggio in caso di errori GraphQL o HTTP.
@@ -36,14 +25,9 @@ export async function graphqlRequest<TData, TVariables = Record<string, unknown>
   query: string,
   variables?: TVariables
 ): Promise<TData> {
-  const token = await getAccessToken();
-
   const res = await fetch(GRAPHQL_ENDPOINT, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ query, variables }),
   });
 
