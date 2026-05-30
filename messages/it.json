@@ -60,6 +60,16 @@
       "ruleSpecial": "Almeno un carattere speciale"
     }
   },
+  "workspaces": {
+    "title": "I tuoi workspace",
+    "empty": "Non hai ancora nessun workspace. Crea il primo qui sotto.",
+    "nameLabel": "Nome del workspace",
+    "slugLabel": "Slug",
+    "create": "Crea workspace",
+    "creating": "Creazione…",
+    "ownerBadge": "Proprietario",
+    "loadError": "Impossibile caricare i tuoi workspace."
+  },
   "errors": {
     "notFound": "Pagina non trovata",
     "notFoundDescription": "Spiacenti, non riusciamo a trovare la pagina che stai cercando. Forse hai digitato male l'URL?",

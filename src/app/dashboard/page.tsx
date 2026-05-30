@@ -7,6 +7,7 @@ import Container from '@mui/material/Container';
 import { MainLayout } from 'src/layouts/main';
 
 import { SignOutButton } from 'src/sections/dashboard/sign-out-button';
+import { WorkspacesPanel } from 'src/sections/dashboard/workspaces-panel';
 
 // ----------------------------------------------------------------------
 
@@ -30,6 +31,8 @@ export default function DashboardPage() {
           }}
         >
           <Typography variant="h2">Dashboard</Typography>
+
+          <WorkspacesPanel />
 
           <SignOutButton />
         </Box>

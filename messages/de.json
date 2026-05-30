@@ -60,6 +60,16 @@
       "ruleSpecial": "Mindestens ein Sonderzeichen"
     }
   },
+  "workspaces": {
+    "title": "Deine Workspaces",
+    "empty": "Du hast noch keine Workspaces. Erstelle unten deinen ersten.",
+    "nameLabel": "Workspace-Name",
+    "slugLabel": "Slug",
+    "create": "Workspace erstellen",
+    "creating": "Wird erstellt…",
+    "ownerBadge": "Eigentümer",
+    "loadError": "Deine Workspaces konnten nicht geladen werden."
+  },
   "errors": {
     "notFound": "Seite nicht gefunden",
     "notFoundDescription": "Leider konnte die gesuchte Seite nicht gefunden werden. Möglicherweise haben Sie die URL falsch eingegeben.",

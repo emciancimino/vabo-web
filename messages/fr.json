@@ -60,6 +60,16 @@
       "ruleSpecial": "Au moins un caractère spécial"
     }
   },
+  "workspaces": {
+    "title": "Vos espaces de travail",
+    "empty": "Vous n'avez encore aucun espace de travail. Créez le premier ci-dessous.",
+    "nameLabel": "Nom de l'espace de travail",
+    "slugLabel": "Slug",
+    "create": "Créer un espace de travail",
+    "creating": "Création…",
+    "ownerBadge": "Propriétaire",
+    "loadError": "Impossible de charger vos espaces de travail."
+  },
   "errors": {
     "notFound": "Page introuvable",
     "notFoundDescription": "Désolé, nous n'avons pas trouvé la page que vous recherchez. Peut-être avez-vous mal saisi l'URL ?",
